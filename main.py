@@ -1,7 +1,3 @@
-import os
-
-print(__file__)
-print(os.getcwd())
 from utilities import Helper
 from calculation import Calculation
 
