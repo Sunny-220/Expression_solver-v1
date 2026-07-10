@@ -233,10 +233,10 @@ class Calculation:
                 final_val=("n"+(final_val[1:]))
             return self.solve_multiply_calc(exp[:operands_lst[1][0]]+[final_val]+exp[operands_lst[1][1]+1:])
         else:
-            return self.solve_addition_calc(exp)
+            return self.solve_add_subtract_calc(exp)
 
     #It solve addition operator expression.    
-    def solve_addition_calc(self,exp):
+    def solve_add_subtract_calc(self,exp):
         if ("+" in exp) or ("-" in exp):
             opr_idx=Helper().find_first_occur_index(exp,{"+","-"})
 
@@ -272,13 +272,13 @@ class Calculation:
                 final_val=str((left_operands)+(right_operands))
                 if ("-" in final_val):
                     final_val=("n"+(final_val[1:]))
-                return self.solve_addition_calc(exp[:operands_lst[1][0]]+[final_val]+exp[operands_lst[1][1]+1:])
+                return self.solve_add_subtract_calc(exp[:operands_lst[1][0]]+[final_val]+exp[operands_lst[1][1]+1:])
             
             else:
                 final_val=str((left_operands)-(right_operands))
                 if ("-" in final_val):
                     final_val=("n"+(final_val[1:]))
-                return self.solve_addition_calc(exp[:operands_lst[1][0]]+[final_val]+exp[operands_lst[1][1]+1:])
+                return self.solve_add_subtract_calc(exp[:operands_lst[1][0]]+[final_val]+exp[operands_lst[1][1]+1:])
         else:
             return exp
         

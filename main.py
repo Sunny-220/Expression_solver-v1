@@ -12,6 +12,8 @@ while True:
     exp_lst=Helper_obj.remove_all_occur_ele(exp_lst,"")
     #uniary minus(-) handling.
     exp_lst=Helper_obj.unary_minus_handling(exp_lst)
+    #fixing multiplication operator.
+    exp_lst=Helper_obj.fix_multiplication(exp_lst)
     #calling our calculation file,that will calculate our expression.
     cal_obj=Calculation()
     #Handling error.

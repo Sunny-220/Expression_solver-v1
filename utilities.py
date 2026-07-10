@@ -92,7 +92,7 @@ class Helper:
             return None
         
     #uniary minus handling.
-    def unary_minus_handling(self,arr,token_lst=None):
+    def unary_minus_handling(self,arr,token_lst=None,lookup_set={")","]","}"}):
         token_lst=[]
         for idx in range(len(arr)):
             if (arr[idx] == "-"):
@@ -100,7 +100,10 @@ class Helper:
                     after_neg_val=float(arr[idx+1]) #represent numeric value.
                     try:
                         if (idx != 0):
-                            before_neg_val=float(arr[idx-1]) #represent numeric value.
+                            if (arr[idx-1] not in lookup_set):
+                                before_neg_val=float(arr[idx-1]) #represent numeric value.
+                            else:
+                                before_neg_val=True
                         else:
                             before_neg_val=None #represent non-numeric-value.
                     except ValueError:
@@ -128,5 +131,38 @@ class Helper:
             curr_itr+=1
 
         return token_lst
-
+    def fix_multiplication(self,exp):
+        exp_lst=[]
+        Numeric=None
+        for idx,ele in enumerate(exp):
+            if (ele == "(" or ele == "[" or ele == "{") and (idx > 0):
+                try:
+                    if ("n" in exp[idx-1]):
+                        Numeric=True
+                    else:
+                        int(exp[idx-1])
+                        Numeric=True
+                except ValueError:
+                    Numeric=None
+                if (Numeric):
+                    exp_lst.extend(["*",ele])
+                else:
+                    exp_lst.append(ele)
+            elif (ele == ")" or ele == "]" or ele == "}") and (idx < len(exp)-1):
+                try:
+                    if ("n" in exp[idx+1]):
+                        Numeric=True
+                    else:
+                        int(exp[idx+1])
+                        Numeric=True
+                except ValueError:
+                    Numeric=None
+                if (Numeric):
+                    exp_lst.extend([ele,"*"])
+                else:
+                    exp_lst.append(ele)
+            else:
+                exp_lst.append(ele)
+        return exp_lst
+        
     
